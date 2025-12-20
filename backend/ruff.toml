@@ -1,0 +1,40 @@
+# Ruff configuration for Extensions Marketplace
+
+# Targeting Python 3.14
+target-version = "py314"
+
+# Line length (Django community standard is 88-120, we'll use 100)
+line-length = 100
+
+[lint]
+# Enable these rule sets
+select = [
+  "E",  # pycodestyle errors
+  "W",  # pycodestyle warnings
+  "F",  # pyflakes
+  "I",  # isort (import sorting)
+  "N",  # pep8-naming
+  "UP", # pyupgrade (modern Python syntax)
+  "B",  # flake8-bugbear (catches common bugs)
+  "C4", # flake8-comprehensions
+  "DJ", # flake8-django (Django-specific linting!)
+  "S",  # flake8-bandit (security checks)
+]
+
+# Ignore specific rules
+ignore = [
+  "S101", # Allow assert statements (useful in tests)
+  "DJ01", # Allow null=True on string fields if need; Django specific stuff
+]
+
+[lint.per-file-ignores]
+# Don't require security checks in migrations or tests
+"*/migrations/*.py" = ["S"]
+"*/tests/*.py" = ["S"]
+
+[format]
+# Use double quotes (matches JavaScript/TypeScript)
+quote-style = "double"
+
+# Django prefers trailing commas
+skip-magic-trailing-comma = false
