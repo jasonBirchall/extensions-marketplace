@@ -11,9 +11,9 @@ class ExtensionAdmin(admin.ModelAdmin):
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ["extension", "user", "check_name", "severity", "created_at"]
-    list_filter = ["severity", "check_name", "created_at"]
-    search_fields = ["extension__name", "message"]
+    list_display = ["extension", "reviewer", "decision", "created_at"]
+    list_filter = ["decision", "created_at"]
+    search_fields = ["extension__name", "reviewer__username", "comments"]
 
 @admin.register(ModerationFlag)
 class ModerationFlagAdmin(admin.ModelAdmin):
