@@ -39,6 +39,7 @@ class Extension(models.Model):
         """String represenetation of the extension."""
         return f"{self.name} v{self.version}"
 
+
 class Review(models.Model):
     """
     Represents a reviewer's feedback on an extension submission
@@ -49,7 +50,7 @@ class Review(models.Model):
         ("rejected", "Rejected"),
         ("needs_changes", "Needs Changes"),
     ]
-    
+
     extension = models.ForeignKey(Extension, on_delete=models.CASCADE, related_name="reviews")
     reviewer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reviews_given")
 
@@ -63,6 +64,7 @@ class Review(models.Model):
 
     def __str__(self):
         return f"Review of {self.extension.name} by {self.reviewer.name}"
+
 
 class ModerationFlag(models.Model):
     """
@@ -89,4 +91,3 @@ class ModerationFlag(models.Model):
 
     def __str__(self):
         return f"{self.severity}: {self.check_name} on {self.extension.name}"
-
