@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -15,55 +14,132 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Extension',
+            name="Extension",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=200)),
-                ('slug', models.SlugField(unique=True)),
-                ('description', models.TextField()),
-                ('version', models.CharField(max_length=50)),
-                ('icon', models.ImageField(blank=True, null=True, upload_to='extensions/icons/')),
-                ('extension_file', models.FileField(upload_to='extensions/files/')),
-                ('status', models.CharField(choices=[('pending', 'Pending Review'), ('approved', 'Approved'), ('rejected', 'Rejected'), ('flagged', 'Flagged for Review')], default='pending', max_length=20)),
-                ('downloads', models.PositiveIntegerField()),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('developer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='extentions', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("name", models.CharField(max_length=200)),
+                ("slug", models.SlugField(unique=True)),
+                ("description", models.TextField()),
+                ("version", models.CharField(max_length=50)),
+                ("icon", models.ImageField(blank=True, null=True, upload_to="extensions/icons/")),
+                ("extension_file", models.FileField(upload_to="extensions/files/")),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("pending", "Pending Review"),
+                            ("approved", "Approved"),
+                            ("rejected", "Rejected"),
+                            ("flagged", "Flagged for Review"),
+                        ],
+                        default="pending",
+                        max_length=20,
+                    ),
+                ),
+                ("downloads", models.PositiveIntegerField()),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "developer",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="extentions",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'ordering': ['-created_at'],
+                "ordering": ["-created_at"],
             },
         ),
         migrations.CreateModel(
-            name='ModerationFlag',
+            name="ModerationFlag",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('check_name', models.CharField(max_length=100)),
-                ('severity', models.CharField(choices=[('info', 'Info'), ('warning', 'Warning'), ('critical', 'Critical')], max_length=10)),
-                ('message', models.TextField()),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('extension', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='flags', to='extensions.extension')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("check_name", models.CharField(max_length=100)),
+                (
+                    "severity",
+                    models.CharField(
+                        choices=[
+                            ("info", "Info"),
+                            ("warning", "Warning"),
+                            ("critical", "Critical"),
+                        ],
+                        max_length=10,
+                    ),
+                ),
+                ("message", models.TextField()),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "extension",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="flags",
+                        to="extensions.extension",
+                    ),
+                ),
             ],
             options={
-                'ordering': ['-created_at'],
+                "ordering": ["-created_at"],
             },
         ),
         migrations.CreateModel(
-            name='Review',
+            name="Review",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('decision', models.CharField(choices=[('approved', 'Approved'), ('rejected', 'Rejected'), ('needs_changes', 'Needs Changes')], max_length=20)),
-                ('comments', models.TextField()),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('extension', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reviews', to='extensions.extension')),
-                ('reviewer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reviews_given', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                (
+                    "decision",
+                    models.CharField(
+                        choices=[
+                            ("approved", "Approved"),
+                            ("rejected", "Rejected"),
+                            ("needs_changes", "Needs Changes"),
+                        ],
+                        max_length=20,
+                    ),
+                ),
+                ("comments", models.TextField()),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "extension",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="reviews",
+                        to="extensions.extension",
+                    ),
+                ),
+                (
+                    "reviewer",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="reviews_given",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'ordering': ['-created_at'],
+                "ordering": ["-created_at"],
             },
         ),
         migrations.AddIndex(
-            model_name='extension',
-            index=models.Index(fields=['status', '-created_at'], name='extensions__status_ca19fe_idx'),
+            model_name="extension",
+            index=models.Index(
+                fields=["status", "-created_at"], name="extensions__status_ca19fe_idx"
+            ),
         ),
     ]
