@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <Router>
+      <div className="app">
+        <nav className="navbar">
+          <h1>Extensions Marketplace</h1>
+          <div className="nav-links">
+            <Link to="/">Marketplace</Link>
+            <Link to="/submit">Submit Extension</Link>
+            <Link to="/reviewer">Revierer Dashboard</Link>
+          </div>
+        </nav>
+        <main className="content">
+          <Routes>
+            <Route path="/" element={<MarketplacePage />} />
+            <Route path="/submit" element={<SubmitExtensionPage />} />
+            <Route path="/reviewer" element={<ReviewerDashboardPage />} />
+            <Route path="/extension/:id" element={<ExtensionDetailPage />} />
+          </Routes>
+        </main>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </Router>
   )
 }
 
-export default App
+function MarketplacePage() {
+  return <div><h2>Marketplace</h2><p>Browse extensions here</p></div>;
+}
+
+function SubmitExtensionPage() {
+  return <div><h2>Submit Extension</h2><p>Developer submission form</p></div>;
+}
+
+function ReviewerDashboardPage() {
+  return <div><h2>Reviewer Dashboard</h2><p>Review pending extensions</p></div>;
+}
+
+function ExtensionDetailPage() {
+  return <div><h2>Extension Details</h2><p>View single extension</p></div>;
+}
+
+export default App;
