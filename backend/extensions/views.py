@@ -1,4 +1,6 @@
+from sys import flags
 from django_filters.rest_framework import DjangoFilterBackend
+from django.contrib.auth.models import User
 from rest_framework import filters, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -7,8 +9,10 @@ from .serializers import (
     ModerationFlagSerializer,
     ReviewSerializer,
 )
+from .moderation import run_moderation_checks
 
 from .models import Extension, ModerationFlag, Review
+from extensions import serializers
 
 
 class ExtensionViewSet(viewsets.ModelViewSet):
@@ -30,6 +34,21 @@ class ExtensionViewSet(viewsets.ModelViewSet):
         pending_extensions = self.queryset.filter(status="pending")
         serializer = self.get_serializer(pending_extensions, many=True)
         return Response(serializer.data)
+
+    def perform_create(self, serializer):
+        """Overide to add a developer and run automated checks"""
+        developer = self.request.user if self.request.user.is_authenticated else User.objects.first()
+        extension = serializer.save(developer=developer)
+        flags = run_moderation_checks(extension)
+        for flag in flags:
+            flag.save()
+
+        if any(flag.severity == "critical" for flag in flags):
+            extension.status = "rejected"
+            extension.save()
+        elif any(flag.severity == "warning" for flag in flags):
+            extension.status = "flagged"
+            extension.save()
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
