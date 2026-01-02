@@ -29,7 +29,7 @@ export const extensionsApi = {
   // GET /api/extensions/pending/
   getPending: async () => {
     const response = await apiClient.get<Extension[]>('/extensions/pending/');
-    return response.data.results;
+    return response.data;
   },
 
   // POST /api/extensions
