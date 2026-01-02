@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { Extension, Review, ModerationFlag } from '../types';
+import type { Extension, Review, ModerationFlag } from '../types';
 
 // base url for the django api
-const API_BASE_URL = 'http://localhost:8000/api'
+const API_BASE_URL = 'http://localhost:8000/api';
 
 // create an axios instance with default config
 const apiClient = axios.create({
@@ -16,13 +16,13 @@ const apiClient = axios.create({
 export const extensionsApi = {
   // GET /api/extensions/
   list: async () => {
-    const response = await apiClient.get<Extension[]>('/extensions');
+    const response = await apiClient.get<Extension[]>('/extensions/');
     return response.data;
   },
 
   // GET /api/extensions/:id/
   get: async (id: number) => {
-    const response = await apiClient.get<Extension[]>('/extensions/${id}/');
+    const response = await apiClient.get<Extension[]>(`/extensions/${id}/`);
     return response.data;
   },
 

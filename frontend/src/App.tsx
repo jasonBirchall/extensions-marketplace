@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import MarketplacePage from './pages/MarketplacePage'
 import './App.css'
 
 function App() {
@@ -10,7 +11,7 @@ function App() {
           <div className="nav-links">
             <Link to="/">Marketplace</Link>
             <Link to="/submit">Submit Extension</Link>
-            <Link to="/reviewer">Revierer Dashboard</Link>
+            <Link to="/reviewer">Reviewer Dashboard</Link>
           </div>
         </nav>
         <main className="content">
@@ -24,10 +25,6 @@ function App() {
       </div>
     </Router>
   )
-}
-
-function MarketplacePage() {
-  return <div><h2>Marketplace</h2><p>Browse extensions here</p></div>;
 }
 
 function SubmitExtensionPage() {
