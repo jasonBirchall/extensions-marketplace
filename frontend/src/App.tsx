@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import MarketplacePage from './pages/MarketplacePage'
+import ReviewerDashboardPage from './pages/ReviewerDashboardPage'
 import './App.css'
 
 function App() {
@@ -29,10 +30,6 @@ function App() {
 
 function SubmitExtensionPage() {
   return <div><h2>Submit Extension</h2><p>Developer submission form</p></div>;
-}
-
-function ReviewerDashboardPage() {
-  return <div><h2>Reviewer Dashboard</h2><p>Review pending extensions</p></div>;
 }
 
 function ExtensionDetailPage() {
