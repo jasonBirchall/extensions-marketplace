@@ -17,7 +17,7 @@ export const extensionsApi = {
   // GET /api/extensions/
   list: async () => {
     const response = await apiClient.get<Extension[]>('/extensions/');
-    return response.data;
+    return response.data.results;
   },
 
   // GET /api/extensions/:id/
@@ -29,7 +29,7 @@ export const extensionsApi = {
   // GET /api/extensions/pending/
   getPending: async () => {
     const response = await apiClient.get<Extension[]>('/extensions/pending/');
-    return response.data;
+    return response.data.results;
   },
 
   // POST /api/extensions

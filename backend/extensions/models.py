@@ -63,7 +63,7 @@ class Review(models.Model):
         ordering = ["-created_at"]
 
     def __str__(self):
-        return f"Review of {self.extension.name} by {self.reviewer.name}"
+        return f"Review of {self.extension.name} by {self.reviewer.username}"
 
 
 class ModerationFlag(models.Model):
