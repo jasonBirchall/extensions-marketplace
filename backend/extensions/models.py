@@ -18,13 +18,13 @@ class Extension(models.Model):
     slug = models.SlugField(unique=True)  # URL friendly identifier
     description = models.TextField()
     version = models.CharField(max_length=50)
-    developer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="extentions")
+    developer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="extensions")
 
     icon = models.ImageField(upload_to="extensions/icons/", null=True, blank=True)
     extension_file = models.FileField(upload_to="extensions/files/")
 
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")
-    downloads = models.PositiveIntegerField()
+    downloads = models.PositiveIntegerField(default=0)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
